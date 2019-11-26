@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>formGenerator</title>
+    
+    <link href="./formGenerator_files/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="./formGenerator_files/fileinput.css" rel="stylesheet" type="text/css">
+    <link href="./formGenerator_files/all.css" rel="stylesheet" type="text/css">
+    <link href="./formGenerator_files/theme.css" media="all" rel="stylesheet" type="text/css">
+    <link href="./formGenerator_files/daterangepicker.css" rel="stylesheet">
+    <link href="./formGenerator_files/component.css" rel="stylesheet">
+	<link href="./formGenerator_files/ncBox.css" rel="stylesheet">
+	<link href="./formGenerator_files/ncTreeview.css" rel="stylesheet">
+	<link href="./formGenerator_files/font-awesome-5.11.2/css/all.css" rel="stylesheet">
+	<link href="./formGenerator_files/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+	    .custom-container{
+		    padding:5px 10px 5px 5px;
+			overflow:hidden auto;
+		}
+
+		.row.border{
+		    border: 0!important;
+		    border-top:1px solid #ccc!important;
+		}
+
+		.row.margin{
+		    margin-top:5px;
+		}
+
+		.row.panel-p{
+		    background-color:#bbb;
+		}
+
+		.row.panel-p:hover,
+		.row.panel-p.focus,
+		.row.panel-f.focus{
+		    background-color:#aaa;
+		}
+
+        .col-sm-1.border-p,
+		.col-sm-2.border-p,
+		.col-sm-3.border-p,
+		.col-sm-4.border-p,
+		.col-sm-6.border-p,
+		.col-sm-12.border-p{
+		    border:2px solid #fff;
+		}
+
+		.col-sm-1.border-f,
+		.col-sm-2.border-f,
+		.col-sm-3.border-f,
+		.col-sm-4.border-f,
+		.col-sm-6.border-f,
+		.col-sm-12.border-f{
+		    border:1px solid #ddd;
+		}
+
+		.border-p.focus{
+		    background-color:#aaa;
+		}
+
+		.border-f.focus{
+		    background-color:#ccc;
+		}
+
+        .col-sm-6.custom{
+		    padding:5px 30px;
+		}
+
+		.btn-area{
+		    padding:2px 15px;
+		}
+
+		#elementEditBox .row{
+		    margin-bottom:5px;
+		}
+
+    </style>
+</head>
+
+<body>
+	<div class="custom-container">
+	    <div class="row">
+		    <div class="col-sm-3">
+                <div class="row">
+				    <div class="col-sm-12">
+					    <div id="nodeTree" class="ncTreeview">
+							<div class="ncTreeviewHead">模板层级结构&nbsp;
+							</div>
+							<div class="ncTreeviewSearch"></div>
+							<div class="ncTreeviewBody">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-9">
+                <div class="row">
+					<div class="col-sm-1 btn-area">
+						<button id="newForm" class="btn btn-default btn-sm"><i class="fa fa-plus"></i>&nbsp;布局</button>
+					</div>
+					<div class="col-sm-1 btn-area">
+						<button id="newComponent" class="btn btn-default btn-sm"><i class="fa fa-plus"></i>&nbsp;组件&nbsp;<i class="fa fa-caret-down"></i></button>
+					</div>
+					<div class="col-sm-1 btn-area">
+						<button id="editElement" class="btn btn-info btn-sm"><i class="fa fa-edit"></i>&nbsp;编辑</button>
+					</div>
+					<div class="col-sm-1 btn-area">
+						<button id="deleteElement" class="btn btn-danger btn-sm"><i class="fa fa-minus"></i>&nbsp;删除</button>
+					</div>
+					<div class="col-sm-3 btn-area">
+					    <div class="btn-group">
+							<button id="saveTemplate" class="btn btn-default btn-sm"><i class="fa fa-download"></i>&nbsp;载入模板</button>
+							<button id="saveTemplate" class="btn btn-primary btn-sm"><i class="fa fa-save"></i>&nbsp;存为模板</button>
+						</div>
+					</div>
+					<div class="col-sm-2 btn-area">
+						<button id="clearDesignStyle" class="btn btn-warning btn-sm"><i class="fa fa-shower"></i>&nbsp;清除设计样式</button>
+					</div>
+				</div>
+				<div class="row border margin">
+					<div class="col-sm-12" id="formContent"></div>
+				</div>    
+			</div>
+		</div>
+	</div>
+
+	<div class="ncBox" id="newFormBox" style="width:900px">
+		<div class="ncBoxHead">新增布局</div>
+		<div class="ncBoxBody">
+		    <div class="row" style="margin:10px 0px;">
+			    <div class="col-sm-12" style="padding-left:0px;">
+				    <h8>选择风格</h8>
+				</div>
+			</div>
+		    <div class="row">
+				<div class="col-sm-12" id="defaultLayout">
+                    
+				</div>
+		    </div>
+            <div class="row" style="margin:10px 0px;">
+			    <div class="form-check" style="line-height: 1.2;">
+				  <label class="form-check-label">
+					<input type="checkbox" class="form-check-input" id="layCustom" value="">自定义
+				  </label>
+				</div>
+			</div>
+			<div class="row" id="customControl">
+				<div class="col-sm-2">
+				    <input type="text" class="form-control input-sm" name="rownum" placeholder="行数" disabled/>
+				</div>
+				<div class="col-sm-2">
+				    <select type="text" class="form-control input-sm" name="colnum" placeholder="列数" disabled>
+					    <option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="6">6</option>
+						<option value="12">12</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="ncBoxFoot right">
+			<button class="ncBoxBtn sm closed">取消</button>
+	        <button class="ncBoxBtn sm closed save">确定</button>
+		</div>
+	</div>
+
+	<div class="ncBox" id="newComponentBox" style="width:500px">
+		<div class="ncBoxHead">新增组件</div>
+		<div class="ncBoxBody">
+		    <div class="row" style="margin:10px 0px;">
+			    <div class="col-sm-12" style="padding-left:0px;">
+				    <h8>选择组件</h8>
+				</div>
+			</div>
+		    <div class="row" id="componentArea">
+				<div class="col-sm-2">
+                    <button class="btn btn-default btn-sm" data-type="component-text">输入框</button>
+				</div>
+				<div class="col-sm-2">
+				    <button class="btn btn-default btn-sm" data-type="component-select">下拉框</button>
+				</div>
+				<div class="col-sm-2">
+                    <button class="btn btn-default btn-sm" data-type="component-radio">单选框</button>
+				</div>
+				<div class="col-sm-2">
+				    <button class="btn btn-default btn-sm" data-type="component-checkbox">复选框</button>
+				</div>
+				<div class="col-sm-2">
+				    <button class="btn btn-default btn-sm" data-type="component-button">按钮</button>
+				</div>
+				<div class="col-sm-2">
+				    <button class="btn btn-default btn-sm" data-type="component-label">标签</button>
+				</div>
+		    </div>
+		</div>
+		<div class="ncBoxFoot right">
+			<button class="ncBoxBtn sm closed">取消</button>
+	        <button class="ncBoxBtn sm closed save">确定</button>
+		</div>
+	</div>
+
+	<div class="ncBox" id="elementEditBox" style="width:900px">
+		<div class="ncBoxHead">
+		    编辑组件-<span name="elementTypeName"></span>
+		    <input type="hidden" name="elementType"/>
+			<input type="hidden" name="elementKey"/>
+		</div>
+		<div class="ncBoxBody">
+		    <form>
+				<div class="row">
+                    <div class="col-sm-6">
+					    <div class="row">
+							<div class="col-sm-12">
+								<h4>外边距</h5>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-3">
+								<input type="text" class="form-control input-sm" placeholder="上-外边距(px)" data-style="margin-top" data-style-unit="px"/>
+							</div>
+							<div class="col-sm-3">
+								<input type="text" class="form-control input-sm" placeholder="右-外边距(px)" data-style="margin-right" data-style-unit="px"/>
+							</div>
+							<div class="col-sm-3">
+								<input type="text" class="form-control input-sm" placeholder="下-外边距(px)" data-style="margin-down" data-style-unit="px"/>
+							</div>
+							<div class="col-sm-3">
+								<input type="text" class="form-control input-sm" placeholder="左-外边距(px)" data-style="margin-left" data-style-unit="px"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+					    <div class="row">
+							<div class="col-sm-12">
+								<h4>内边距</h5>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-3">
+								<input type="text" class="form-control input-sm" placeholder="上-内边距(px)" data-style="padding-top" data-style-unit="px"/>
+							</div>
+							<div class="col-sm-3">
+								<input type="text" class="form-control input-sm" placeholder="右-内边距(px)" data-style="padding-right" data-style-unit="px"/>
+							</div>
+							<div class="col-sm-3">
+								<input type="text" class="form-control input-sm" placeholder="下-内边距(px)" data-style="padding-down" data-style-unit="px"/>
+							</div>
+							<div class="col-sm-3">
+								<input type="text" class="form-control input-sm" placeholder="左-内边距(px)" data-style="padding-left" data-style-unit="px"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+                    <div class="col-sm-6">
+					    <div class="row">
+							<div class="col-sm-12">
+								<h4>边框</h5>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-3">
+								<input type="text" class="form-control input-sm" placeholder="上-边框宽度(px)" data-style="border-top" data-style-unit="px"/>
+							</div>
+							<div class="col-sm-3">
+								<input type="text" class="form-control input-sm" placeholder="右-边框宽度(px)" data-style="border-right" data-style-unit="px"/>
+							</div>
+							<div class="col-sm-3">
+								<input type="text" class="form-control input-sm" placeholder="下-边框宽度(px)" data-style="border-down" data-style-unit="px"/>
+							</div>
+							<div class="col-sm-3">
+								<input type="text" class="form-control input-sm" placeholder="左-边框宽度(px)" data-style="border-left" data-style-unit="px"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+					    <div class="row">
+							<div class="col-sm-12">
+								<h4>大小</h5>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">
+								<input type="text" class="form-control input-sm" placeholder="宽度(px)" data-style="width" data-style-unit="px"/>
+							</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control input-sm" placeholder="高度(px)" data-style="height" data-style-unit="px"/>
+							</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control input-sm" placeholder="行间距(px)" data-style="line-height" data-style-unit="px"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+                    <div class="col-sm-6">
+					    <div class="row">
+							<div class="col-sm-12">
+								<h4>背景</h5>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<input type="text" class="form-control input-sm" placeholder="背景色" data-style="background-color"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+					    <div class="row">
+							<div class="col-sm-12">
+								<h4>字体</h5>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-3">
+								<input type="text" class="form-control input-sm" placeholder="字体大小" data-style="font-size" data-style-unit="px"/>
+							</div>
+							<div class="col-sm-3">
+								<input type="text" class="form-control input-sm" placeholder="字体颜色" data-style="color"/>
+							</div>
+							<div class="col-sm-3">
+								<input type="text" class="form-control input-sm" placeholder="字体粗细" data-style="font-weight"/>
+							</div>
+							<div class="col-sm-3">
+								<input type="text" class="form-control input-sm" placeholder="字体类型" data-style="font-family"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+                    <div class="col-sm-6">
+					    <div class="row">
+							<div class="col-sm-12">
+								<h4>数据源</h5>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6">
+								<input type="text" class="form-control input-sm" placeholder="显示名称"  data-property="display-name"/>
+							</div>
+							<div class="col-sm-6">
+								<input type="text" class="form-control input-sm" placeholder="数据源名称"  data-property="datasource-name"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+					    <div class="row">
+							<div class="col-sm-12">
+								<h4>位置</h5>
+							</div>
+						</div>
+						<div class="row" style="font-size:14px;">
+							<div class="col-sm-3">
+								<label><input type="radio" name="textAlign" data-style="text-align" value="left" checked/>&nbsp;居左</label>
+							</div>
+							<div class="col-sm-3">
+								<label><input type="radio" name="textAlign" data-style="text-align" value="center"/>&nbsp;居中</label>
+							</div>
+							<div class="col-sm-3">
+								<label><input type="radio" name="textAlign" data-style="text-align" value="right"/>&nbsp;居右</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="ncBoxFoot right">
+			<button class="ncBoxBtn sm closed">取消</button>
+	        <button class="ncBoxBtn sm closed save">确定</button>
+		</div>
+	</div>
+</body>
+
+<script src="./formGenerator_files/jquery.min.js" type="text/javascript"></script>
+<script src="./formGenerator_files/bootstrap.min.js" type="text/javascript"></script>
+<script src="./formGenerator_files/piexif.js" type="text/javascript"></script>
+<script src="./formGenerator_files/sortable.js" type="text/javascript"></script>
+<script src="./formGenerator_files/fileinput.js" type="text/javascript"></script>
+<script src="./formGenerator_files/zh.js" type="text/javascript"></script>
+<script src="./formGenerator_files/theme.js" type="text/javascript"></script>
+<script src="./formGenerator_files/moment.js"></script>
+<script src="./formGenerator_files/daterangepicker.js"></script>
+<script src="./formGenerator_files/founder.js"></script>
+<script src="./formGenerator_files/ncBox.js"></script>
+<script src="./formGenerator_files/ncTreeview.js"></script>
+<script src="./formGenerator_files/jquery.serializeobject.js"></script>
+
+<script>
+    var fg = formGenerator = {
+	    initialize : function(){
+			var myself = this;
+		    $(function(){
+				myself.buildLayoutPreview();
+
+				for(var i in myself){
+				    if(myself[i].init){
+					    myself[i].init();
+					}
+				}
+			});
+		},
+		formContent : {
+			ref : function(){
+			    return $("#formContent");
+			},
+		    add : function(element){
+				var ele = $.extend({}, element);
+
+				var html = "";
+				var $form = this.ref();
+
+				if(ele.type.indexOf("layout-") == 0){
+				    html = fg.getLayoutHtml(ele, 1, "f");
+				}else if(ele.type.indexOf("component-") == 0){
+				    html = fg.getComponentHtml(ele.type);
+				}
+
+                var node = fg.treeview.nodeTree.getCurrentNode();
+                var tag = fg.getElementTagByType(node.type);
+
+                var $html = $(html);
+                if(node.id == "root"){
+					$form.append($html);
+				}else{
+					var $ele = $form.find(tag+"[data-key='"+node.id+"']:first");
+					$ele.append($html);
+				}
+
+				ele.key = $html.attr("data-key");
+
+				//写入树节点
+				var name = fg.getElementNameByType(ele.type);
+				fg.treeview.nodeTree.add(ele.key, name, "", {type:ele.type});
+
+				var $childs = $form.find(tag+"[data-key='"+ele.key+"']").children("div[data-key]");
+				
+				$childs.each(function(){
+					var $el = $(this);
+					fg.treeview.nodeTree.add(
+						$el.attr("data-key"), 
+						fg.getElementNameByType($el.attr("data-type")), 
+						ele.key, 
+						{type : $el.attr("data-type")}
+					);
+				});
+			},
+			modify : function(){
+			},
+			remove : function(key, type){
+				var $ele = fg.getDomElement(key, type);
+				if($ele.length == 0) return;
+                $ele.remove();
+
+				fg.treeview.nodeTree.remove(key);
+			},
+			setStyle : function(key, type, styles){
+				var $ele = fg.getDomElement(key, type);
+				if($ele.length == 0) return;
+				if(styles){
+				    $ele.attr("style", styles);
+				}
+			},
+			setProperty : function(key, type, properties){
+                var $ele = fg.getDomElement(key, type);
+				if($ele.length == 0) return;
+				for(var i in properties){
+					var pro = properties[i];
+				    $ele.attr("data-"+i, pro);
+                    if(i == "display-name"){
+						var tag = $ele[0].tagName;
+                        if(tag.toLowerCase() == "label"){
+							if($ele.find("span").length == 0){
+							    $ele.append("<span></span>");
+							}
+							$ele.find("span").text(pro);
+						}else if(tag.toLowerCase() == "input"){
+						    $ele.val(pro);
+						}else if(tag.toLowerCase() == "div"){
+						    $ele.text(pro);
+						}else if(tag.toLowerCase() == "select"){
+						    $ele.val(pro);
+						}else if(tag.toLowerCase() == "button"){
+						    $ele.html(pro);
+						}
+					}
+				}
+			},
+			getStyleWithProperty : function(key, type){
+			    var $ele = fg.getDomElement(key, type);
+				if($ele.length == 0) return;
+                
+				var sty = {};
+				var style = $ele.attr("style");
+				if(style){
+					var styles = style.split(";");
+					for(var i=0; i<styles.length; i++){
+						var s = styles[i];
+						var ss = s.split(":");
+						sty[ss[0]] = ss[1];
+					}
+				}
+
+                var attrs = {};
+				$.each($ele[0].attributes, function() {
+					var index = this.name.indexOf("data-");
+					if(index > -1){
+						var n = this.name.substr(index + 5, this.name.length - 5);
+						attrs[n] = this.value;
+					}
+				});
+
+				return {styles: sty, properties: attrs};
+			}
+		},
+		getDomElement : function(key, type){
+			return this.formContent.ref().find(fg.getElementTagByType(type)+"[data-key='"+key+"']");
+		},
+		elementTemplate : {
+            "layout-row":{name:"行", tag:"div", html:""},
+			"layout-column":{name:"列", tag:"div", html:""},
+			"component-text":{name:"输入框", tag:"input", html:"<input type='text' class='form-control input-sm' data-key='{data-key}'/>"},
+			"component-radio":{name:"单选框", tag:"label", html:"<label data-key='{data-key}'><input type='radio'/></label>"},
+			"component-checkbox":{name:"复选框", tag:"label", html:"<label data-key='{data-key}'><input type='checkbox'/></label>"},
+			"component-button":{name:"按钮", tag:"button", html:"<button class='btn btn-default btn-sm' data-key='{data-key}'></button>"},
+			"component-select":{name:"下拉框", tag:"select", html:"<select class='form-control input-sm' data-key='{data-key}'></select>"},
+			"component-date":{name:"时间选择器", tag:"input", html:"<input type='text' class='form-control input-sm' data-key='{data-key}'/>"},
+			"component-label":{name:"文本标签", tag:"label", html:"<label data-key='{data-key}'></label>"}
+		},
+		getElementTagByType : function(type){
+			if(!this.elementTemplate[type]) return "";
+			return this.elementTemplate[type].tag;
+		},
+		getElementNameByType : function(type){
+			if(!this.elementTemplate[type]) return "";
+			return this.elementTemplate[type].name;
+		},
+		getComponentHtml : function(type){
+			var t = type.substr("component-".length);
+			return this.elementTemplate[type].html.replace('{data-key}', fg.getUUID(t+"-"));
+		},
+		getLayoutHtml : function(layoutData, colnum){
+			var ld = [];
+
+			if(Object.prototype.toString.call(layoutData) != '[object Array]'){
+				ld.push(layoutData);
+			}else{
+				ld = layoutData;
+			}
+            
+			colnum = colnum?colnum:1;
+
+		    var html = "";
+		    for(var i = 0; i < ld.length; i++){
+                var item = ld[i];
+                html += '<div class="row panel-f" data-type="layout-row" '
+				        + 'data-key="'+fg.getUUID("row-")+'">';
+			    
+				for(var j = 0; j < item.colnum; j++){
+				    html += '<div class="col-sm-'+(12/item.colnum)+' border-f" data-type="layout-column" data-key="'+fg.getUUID("column-")+'" style="height:30px;"></div>';
+				}
+
+                html += '</div>';
+			}
+			return html;
+		},
+		getPreviewHtml : function(layoutData){
+			var ld = [];
+
+			if(Object.prototype.toString.call(layoutData) != '[object Array]'){
+				ld.push(layoutData);
+			}else{
+				ld = layoutData;
+			}
+            
+		    var html = "";
+		    for(var i = 0; i < ld.length; i++){
+				if(i%2 == 0){
+					html += "<div class='row'>";
+				}
+
+                var item = ld[i];
+                html += '<div class="col-sm-6 custom"><div class="row panel-p" data-type="layout-row" '
+				        + 'data-key="'+item.key+'">';
+			    
+				for(var j = 0; j < item.colnum; j++){
+				    html += '<div class="col-sm-'+(12/item.colnum)+' border-p" data-type="layout-column" style="height:30px;"></div>';
+				}
+
+                html += '</div></div>';
+
+				if(i%2 != 0){
+					html += "</div>";
+				}
+			}
+			return html;
+		},
+		buildLayoutPreview : function(){
+			var $defaultLayout = $("#defaultLayout");
+			$defaultLayout.html(this.getPreviewHtml(this.data.initLayout));
+		},
+		data : {
+		    initLayout : [
+			    { colnum : 1, key : 1, type : "layout-row"},
+				{ colnum : 2, key : 2, type : "layout-row"},
+				{ colnum : 3, key : 3, type : "layout-row"},
+				{ colnum : 4, key : 4, type : "layout-row"},
+				{ colnum : 6, key : 6, type : "layout-row"},
+				{ colnum : 12, key : 8, type : "layout-row"}
+			],
+			getLayout : function(key){
+				for(var i = 0; i < this.initLayout.length; i++){
+				    var item = this.initLayout[i];
+					if(item.key == key){
+					    return item;
+					}
+				}
+				return null;
+			}
+		},
+		box : {
+			init : function(){
+			    for(var i in this){
+				    if(this[i].define){
+					    this[i].define();
+					}
+				}
+			},
+		    newFormBox : {
+			    define : function(){
+				    $("#newFormBox").ncBox({event : {
+					    save : function(){
+							var rownum = 1;
+						    if(fg.layoutWay == 'custom'){
+								var $cc = $("#customControl");
+								rownum = $cc.find("input[name='rownum']").val();
+								var l = {
+									colnum : $cc.find("select[name='colnum']>option:selected").val(),
+									type: "layout-row"
+								};
+                                fg.data.setLayout = l;
+							}
+                            
+							if(fg.data.setLayout){
+								for(var i = 0; i < rownum; i++){
+									 fg.formContent.add(fg.data.setLayout);
+								}
+							}
+						}
+					}});
+				}
+			},
+			newComponentBox : {
+			    define : function(){
+					myself = this;
+					$("#componentArea").find("button[data-type]").click(function(){
+					    myself.currentComponent = $(this).attr("data-type");		    
+					});
+				    $("#newComponentBox").ncBox({event : {
+					    save : function(){
+                            var type = myself.currentComponent;
+                            fg.formContent.add({type:type});
+						}
+					}});
+				}
+			},
+			elementEditBox : {
+				define : function(){
+                    $("#elementEditBox").ncBox({event : {
+					    save : function(){
+							var styles = '';
+							var properties = {};
+
+							var $eles = $("#elementEditBox form").find("input,select");
+							$eles.each(function(){
+							    var $e = $(this);
+                                var val = $e.val();
+
+								if($e[0].tagName.toLowerCase() == "input"){
+								    if($e.attr("type") == "radio" || $e.attr("type") == "checkbox"){
+									    if(!$e.prop("checked")) return;
+									}
+								}
+
+                                if(val && val.trim()){
+								    var style = $e.attr("data-style");
+									var unit =  $e.attr("data-style-unit");
+									if(style){
+										styles += style+":"+val+(unit?unit:"")+";";
+									}
+
+									var pro = $e.attr("data-property");
+									if(pro){
+										properties[pro] = val;
+									}
+								}
+							});
+
+                            var $eeb = $("#elementEditBox");
+                            var key = $eeb.find("input[name='elementKey']").val();
+                            var type = $eeb.find("input[name='elementType']").val();
+                            
+							fg.formContent.setStyle(key, type, styles);
+                            fg.formContent.setProperty(key, type, properties);
+						}
+					}});
+				}
+			},
+			panel : {
+			    define : function(){
+				    $(".row.panel-p").click(function(){
+						$(".row.panel-p").removeClass("focus");
+					    $(this).addClass("focus");
+
+                        fg.data.setLayout = fg.data.getLayout($(this).attr("data-key"));
+					});
+				}
+			}
+		},
+		event : {
+			init : function(){
+			    for(var i in this){
+				    if(this[i].define){
+					    this[i].define();
+					}
+				}
+			},
+		    newForm : {
+			    define : function(){
+				    $("#newForm").click(function(){
+					    $("#newFormBox").getNcBox().show();
+					});
+				}
+			},
+			newComponent : {
+			    define : function(){
+					$("#newComponent").click(function(){
+						$("#newComponentBox").getNcBox().show();
+					});
+				}
+			},
+			editElement : {
+			    define : function(){
+				    $("#editElement").click(function(){
+						var node = fg.treeview.nodeTree.getCurrentNode();
+						var $eeb = $("#elementEditBox");
+						
+						$.clearAndInitForm($eeb.find("form"));
+
+						$eeb.find("span[name='elementTypeName']").text(fg.getElementNameByType(node.type));
+						$eeb.find("input[name='elementType']").val(node.type?node.type:"");
+						$eeb.find("input[name='elementKey']").val(node.id);
+                        
+                        var sp = fg.formContent.getStyleWithProperty(node.id, node.type);
+						var styles = sp.styles;
+						var properties = sp.properties;
+
+                        $eeb.find("form input,form select").each(function(){
+						    var $this = $(this);
+							var s = $this.attr("data-style");
+							var unit = $this.attr("data-style-unit");
+							var val = styles[s];
+
+							if(val){
+								val = val.replace(unit, "");
+							    if($this.attr("type") == "radio" || $this.attr("type") == "checkbox"){
+								    if($this.val() == val){
+									    $this.prop("checked", true);
+									}
+								}else{
+								    $this.val(val);
+								}
+							}
+
+							var dp = $this.attr("data-property");
+							if(dp && properties[dp]){
+							    $this.val(properties[dp]);
+							}
+						});
+
+						$eeb.getNcBox().show();
+					});
+				}
+			},
+			deleteElement : {
+			    define : function(){
+				    $("#deleteElement").click(function(){
+						var node = fg.treeview.nodeTree.getCurrentNode();
+                        fg.formContent.remove(node.id, node.type);
+					});
+				}
+			},
+			layCustom : {
+			    define : function(){
+					fg.layoutWay = 'default';
+				    $("#layCustom").click(function(){
+						var check = $(this).prop("checked");
+						if(check){
+							fg.layoutWay = 'custom';
+						    $("#customControl").find("input,select").removeAttr("disabled");
+						}else{
+							fg.layoutWay = 'default';
+						    $("#customControl").find("input,select").attr("disabled","disabled");
+						}
+					});
+				}
+			},
+			clearDesignStyle : {
+			    define : function(){
+					var myself = this;
+				    $("#clearDesignStyle").click(function(){
+						if(myself.isClear){
+                            var $ele = $("#formContent").find(".panel-c,.border-c");
+							$ele.removeClass("panel-c").addClass("panel-f");
+							$ele.removeClass("border-c").addClass("border-f");
+						}else{
+						    var $ele = $("#formContent").find(".panel-f,.border-f");
+							$ele.removeClass("panel-f").addClass("panel-c");
+							$ele.removeClass("border-f").addClass("border-c");
+						}
+
+						myself.isClear = !myself.isClear;
+					});
+				}
+			}
+		},
+		treeview : {
+			init : function(){
+			    for(var i in this){
+				    if(this[i].define){
+					    this[i].define();
+					}
+				}
+			},
+		    nodeTree : {
+			    define : function(){
+				    $("#nodeTree").ncTreeview({
+						 showIcon:true,
+					     nodeClick:function(node){
+                             var key = node.id;
+							 $("#formContent").find("div[data-key]").removeClass("focus");
+	                         var $ele = $("#formContent").find("div[data-key='"+key+"']:first");
+							 $ele.addClass("focus");
+					     }
+				    });
+					var tv = $("#nodeTree").getNcTreeview();
+					tv.setHeight($(window).height() - 30);
+					tv.load([{id:"root", name:"模板"}]);
+					tv.setCurrentNode("root");
+				},
+				add : function(id, name, pid, attributes){
+					var tv = $("#nodeTree").getNcTreeview();
+					pid = pid?pid:tv.getCurrentNode().id;
+
+				    tv.insertNodeObj({id:id, name:name, pid:pid, attributes:attributes});
+				},
+				remove : function(id){
+				    $("#nodeTree").getNcTreeview().deleteNode(id);
+				},
+				getCurrentNode : function(){
+				    return $("#nodeTree").getNcTreeview().getCurrentNode();
+				}
+			}
+		},
+		getUUID : function(prefix){
+			var s = [];
+			var hexDigits = "0123456789abcdef";
+
+			for (var i = 0; i < 36; i++) {
+				s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+			}
+
+			s[14] = "4";
+			s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);
+			s[8] = s[13] = s[18] = s[23] = "-";
+
+			var uuid = s.join("");
+
+			return prefix + uuid;
+		}
+	}
+
+	fg.initialize();
+</script>
+
+</html>

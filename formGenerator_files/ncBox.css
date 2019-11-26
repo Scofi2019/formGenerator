@@ -1,0 +1,273 @@
+.ncBox{
+	float:left;
+	position:fixed;
+	box-sizing:border-box;
+	width:100%;
+	display:none;
+	z-index:1999;
+	background-color:#fff;
+	border:1px solid #ccc;
+	border-bottom-left-radius:6px;
+	border-bottom-right-radius:6px;
+	border-top-left-radius:6px;
+	border-top-right-radius:6px;
+}
+
+.ncMask{
+	width:100%;
+	float:left;
+	position:fixed;
+	z-index:999;
+	background-color:#ccc;
+	opacity:0.5;
+}
+
+.ncBox.show{
+	display:inline-block!important;
+}
+
+.ncBox>.ncBoxHead{
+	float:left;
+	box-sizing:border-box;
+	width:100%;
+	height:30px;
+	line-height:30px;
+	border-bottom:1px solid #ccc;
+	background-color:#1c84c6;
+	color:#fff;
+	padding-left:5px;
+	font-weight:bold;
+}
+
+.ncBox>.ncBoxBody{
+	float:left;
+	box-sizing:border-box;
+	width:100%;
+	padding:3px 5px;
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+
+.ncBox>.ncBoxFoot{
+	float:left;
+	box-sizing:border-box;
+	width:100%;
+	padding:5px 4px;
+	border-top:1px solid #ccc;
+}
+
+.ncBox>.ncBoxFoot.right{
+    text-align:right;
+}
+
+.ncBoxRow{
+	float:left;
+	box-sizing:border-box;
+	width:100%;
+	clear:both;
+	display:table;
+}
+
+.ncBoxCol-1{
+	float:left;
+	width:8.33%;
+	box-sizing:border-box;
+	padding:0px 2px;
+	position:relative;
+}
+
+.ncBoxCol-2{
+	float:left;
+	width:16.66%;
+	box-sizing:border-box;
+	padding:0px 2px;
+	position:relative;
+}
+
+.ncBoxCol-3{
+	float:left;
+	width:24.99%;
+	box-sizing:border-box;
+	padding:0px 2px;
+	position:relative;
+}
+
+.ncBoxCol-4{
+	float:left;
+	width:33.32%;
+	box-sizing:border-box;
+	padding:0px 2px;
+	position:relative;
+}
+
+.ncBoxCol-5{
+	float:left;
+	width:41.65%;
+	box-sizing:border-box;
+	padding:0px 2px;
+	position:relative;
+}
+
+.ncBoxCol-6{
+	float:left;
+	width:49.98%;
+	box-sizing:border-box;
+	padding:0px 2px;
+	position:relative;
+}
+
+.ncBoxCol-7{
+	float:left;
+	width:58.31%;
+	box-sizing:border-box;
+	padding:0px 2px;
+	position:relative;
+}
+
+.ncBoxCol-8{
+	float:left;
+	width:66.64%;
+	box-sizing:border-box;
+	padding:0px 2px;
+	position:relative;
+}
+
+.ncBoxCol-9{
+	float:left;
+	width:74.97%;
+	box-sizing:border-box;
+	padding:0px 2px;
+	position:relative;
+}
+
+.ncBoxCol-10{
+	float:left;
+	width:83.3%;
+	box-sizing:border-box;
+	padding:0px 2px;
+	position:relative;
+}
+
+.ncBoxCol-11{
+	float:left;
+	width:91.63%;
+	box-sizing:border-box;
+	padding:0px 2px;
+	position:relative;
+}
+
+.ncBoxCol-12{
+	float:left;
+	width:99.96%;
+	box-sizing:border-box;
+	padding:0px 2px;
+	position:relative;
+}
+
+button.ncBoxBtn{
+	display: inline-block;
+    margin-bottom: 0;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius:4px;
+    text-decoration: none;
+    outline:none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    line-height:1;
+}
+
+button.ncBoxBtn:hover {
+    opacity: 0.8;
+}
+
+button.ncBoxBtn:active{
+	border:1px solid #1c84c6;
+	opacity:1;
+}
+
+button.ncBoxBtn.xs{
+	padding:2px 4px;
+	font-size:9px;
+}
+
+button.ncBoxBtn.sm{
+	padding:4px 6px;
+	font-size:11px;
+}
+
+button.ncBoxBtn.md{
+	padding:6px 8px;
+	font-size:11px;
+}
+
+button.ncBoxBtn.default{
+	background-color:#fff;
+	color:#000;
+}
+
+button.ncBoxBtn.reset{
+	background-color:rgba(27,134,26,0.64);
+	color:#fff;
+}
+
+button.ncBoxBtn.delete{
+	background-color:red;
+	color:#fff;
+}
+
+button.ncBoxBtn.save{
+	background-color:#1c84c6;
+	color:#fff;
+}
+
+button.ncBoxBtn.query{
+	background-color:#fff;
+}
+
+.ncBoxInput{
+	outline:none;
+}
+
+.ncBoxInput:focus,.ncBoxInput.sm,.ncBoxInput.md:focus{
+	border:1px solid #1c84c6;
+}
+
+.ncBoxInput.sm{
+	height: 20px;
+	padding: 3px 2px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing:border-box;
+}
+
+.ncBoxInput.md{
+	height: 30px;
+	padding: 5px 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    font-size:16px;
+    box-sizing:border-box;
+}
+
+.ncBoxLabel{
+	font-size:14px;
+	font-weight:bold;
+}
+
+.ncBoxLabel.md{
+	font-size:16px;
+	font-weight:bold;
+}
+
+.ncBoxLabel.lg{
+	font-size:18px;
+	font-weight:bold;
+}
