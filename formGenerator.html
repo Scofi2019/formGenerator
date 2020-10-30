@@ -12,83 +12,20 @@
     <link href="./formGenerator_files/daterangepicker.css" rel="stylesheet">
     <link href="./formGenerator_files/component.css" rel="stylesheet">
 	<link href="./formGenerator_files/ncBox.css" rel="stylesheet">
+	<link href="./formGenerator_files/ncTable.css" rel="stylesheet">
 	<link href="./formGenerator_files/ncTreeview.css" rel="stylesheet">
-	<link href="./formGenerator_files/font-awesome-5.11.2/css/all.css" rel="stylesheet">
 	<link href="./formGenerator_files/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet">
-    <style>
-	    .custom-container{
-		    padding:5px 10px 5px 5px;
-			overflow:hidden auto;
-		}
-
-		.row.border{
-		    border: 0!important;
-		    border-top:1px solid #ccc!important;
-		}
-
-		.row.margin{
-		    margin-top:5px;
-		}
-
-		.row.panel-p{
-		    background-color:#bbb;
-		}
-
-		.row.panel-p:hover,
-		.row.panel-p.focus,
-		.row.panel-f.focus{
-		    background-color:#aaa;
-		}
-
-        .col-sm-1.border-p,
-		.col-sm-2.border-p,
-		.col-sm-3.border-p,
-		.col-sm-4.border-p,
-		.col-sm-6.border-p,
-		.col-sm-12.border-p{
-		    border:2px solid #fff;
-		}
-
-		.col-sm-1.border-f,
-		.col-sm-2.border-f,
-		.col-sm-3.border-f,
-		.col-sm-4.border-f,
-		.col-sm-6.border-f,
-		.col-sm-12.border-f{
-		    border:1px solid #ddd;
-		}
-
-		.border-p.focus{
-		    background-color:#aaa;
-		}
-
-		.border-f.focus{
-		    background-color:#ccc;
-		}
-
-        .col-sm-6.custom{
-		    padding:5px 30px;
-		}
-
-		.btn-area{
-		    padding:2px 15px;
-		}
-
-		#elementEditBox .row{
-		    margin-bottom:5px;
-		}
-
-    </style>
+	<link href="./formGenerator_files/formGenerator.css" rel="stylesheet">
 </head>
 
 <body>
 	<div class="custom-container">
 	    <div class="row">
-		    <div class="col-sm-3">
+		    <div class="col-sm-2">
                 <div class="row">
 				    <div class="col-sm-12">
-					    <div id="nodeTree" class="ncTreeview">
-							<div class="ncTreeviewHead">模板层级结构&nbsp;
+					    <div id="nodeTree" class="ncTreeview" oncontextmenu="return false;">
+							<div class="ncTreeviewHead">文档层级结构&nbsp;
 							</div>
 							<div class="ncTreeviewSearch"></div>
 							<div class="ncTreeviewBody">
@@ -97,7 +34,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-9">
+			<div class="col-sm-8">
                 <div class="row">
 					<div class="col-sm-1 btn-area">
 						<button id="newForm" class="btn btn-default btn-sm"><i class="fa fa-plus"></i>&nbsp;布局</button>
@@ -121,9 +58,28 @@
 						<button id="clearDesignStyle" class="btn btn-warning btn-sm"><i class="fa fa-shower"></i>&nbsp;清除设计样式</button>
 					</div>
 				</div>
-				<div class="row border margin">
-					<div class="col-sm-12" id="formContent"></div>
+				<div class="row margin">
+					<div class="col-sm-12" style="padding:0px;">
+					    <iframe id="formContent" frameborder="0" style="width:100%;border:1px solid #ddd;"></iframe>
+					</div>
 				</div>    
+			</div>
+			<div class="col-sm-2">
+			    <div class="ncTable" id="elementProperties">
+				    <div class="ncTableTitle">
+				        <div style="font-size:14px;padding:5px 0px;">元素属性</div>
+				    </div>
+				    <div class="ncTableHead" nc-group-name="group" nc-group-sort="none">
+				        <div class="ncTableRow">
+				            <div class="ncTableHeadItem" nc-width="100" name="name">属性名</div>
+				            <div class="ncTableHeadItem" nc-width="100" name="value" nc-editable="true">属性值</div>
+							<div class="ncTableHeadItem" nc-width="100" nc-hidden="true" name="group">属性分组</div>
+							<div class="ncTableHeadItem" nc-width="100" nc-hidden="true" name="code">属性CODE</div>
+				        </div>
+				    </div>
+				    <div class="ncTableBody">
+				    </div>
+				 </div>
 			</div>
 		</div>
 	</div>
@@ -165,8 +121,8 @@
 			</div>
 		</div>
 		<div class="ncBoxFoot right">
-			<button class="ncBoxBtn sm closed">取消</button>
-	        <button class="ncBoxBtn sm closed save">确定</button>
+			<button class="ncBoxBtn sm close">取消</button>
+	        <button class="ncBoxBtn sm save">确定</button>
 		</div>
 	</div>
 
@@ -200,8 +156,8 @@
 		    </div>
 		</div>
 		<div class="ncBoxFoot right">
-			<button class="ncBoxBtn sm closed">取消</button>
-	        <button class="ncBoxBtn sm closed save">确定</button>
+			<button class="ncBoxBtn sm close">取消</button>
+	        <button class="ncBoxBtn sm save">确定</button>
 		</div>
 	</div>
 
@@ -228,7 +184,7 @@
 								<input type="text" class="form-control input-sm" placeholder="右-外边距(px)" data-style="margin-right" data-style-unit="px"/>
 							</div>
 							<div class="col-sm-3">
-								<input type="text" class="form-control input-sm" placeholder="下-外边距(px)" data-style="margin-down" data-style-unit="px"/>
+								<input type="text" class="form-control input-sm" placeholder="下-外边距(px)" data-style="margin-bottom" data-style-unit="px"/>
 							</div>
 							<div class="col-sm-3">
 								<input type="text" class="form-control input-sm" placeholder="左-外边距(px)" data-style="margin-left" data-style-unit="px"/>
@@ -249,7 +205,7 @@
 								<input type="text" class="form-control input-sm" placeholder="右-内边距(px)" data-style="padding-right" data-style-unit="px"/>
 							</div>
 							<div class="col-sm-3">
-								<input type="text" class="form-control input-sm" placeholder="下-内边距(px)" data-style="padding-down" data-style-unit="px"/>
+								<input type="text" class="form-control input-sm" placeholder="下-内边距(px)" data-style="padding-bottom" data-style-unit="px"/>
 							</div>
 							<div class="col-sm-3">
 								<input type="text" class="form-control input-sm" placeholder="左-内边距(px)" data-style="padding-left" data-style-unit="px"/>
@@ -272,7 +228,7 @@
 								<input type="text" class="form-control input-sm" placeholder="右-边框宽度(px)" data-style="border-right" data-style-unit="px"/>
 							</div>
 							<div class="col-sm-3">
-								<input type="text" class="form-control input-sm" placeholder="下-边框宽度(px)" data-style="border-down" data-style-unit="px"/>
+								<input type="text" class="form-control input-sm" placeholder="下-边框宽度(px)" data-style="border-bottom" data-style-unit="px"/>
 							</div>
 							<div class="col-sm-3">
 								<input type="text" class="form-control input-sm" placeholder="左-边框宽度(px)" data-style="border-left" data-style-unit="px"/>
@@ -371,8 +327,8 @@
 			</form>
 		</div>
 		<div class="ncBoxFoot right">
-			<button class="ncBoxBtn sm closed">取消</button>
-	        <button class="ncBoxBtn sm closed save">确定</button>
+			<button class="ncBoxBtn sm close">取消</button>
+	        <button class="ncBoxBtn sm save">确定</button>
 		</div>
 	</div>
 </body>
@@ -388,6 +344,7 @@
 <script src="./formGenerator_files/daterangepicker.js"></script>
 <script src="./formGenerator_files/founder.js"></script>
 <script src="./formGenerator_files/ncBox.js"></script>
+<script src="./formGenerator_files/ncTable.js"></script>
 <script src="./formGenerator_files/ncTreeview.js"></script>
 <script src="./formGenerator_files/jquery.serializeobject.js"></script>
 
@@ -405,145 +362,54 @@
 				}
 			});
 		},
-		formContent : {
-			ref : function(){
-			    return $("#formContent");
-			},
-		    add : function(element){
-				var ele = $.extend({}, element);
-
-				var html = "";
-				var $form = this.ref();
-
-				if(ele.type.indexOf("layout-") == 0){
-				    html = fg.getLayoutHtml(ele, 1, "f");
-				}else if(ele.type.indexOf("component-") == 0){
-				    html = fg.getComponentHtml(ele.type);
+		//表单风格库
+		style : {
+			//默认样式
+			defaultx : "Bootstrap",
+		    Bootstrap : {
+				lib : [
+				    '<link href="./formGenerator_files/bootstrap.min.css" rel="stylesheet" type="text/css">',
+					'<link href="./formGenerator_files/formContent.css" rel="stylesheet" type="text/css">',
+					'<script src="./formGenerator_files/jquery.min.js" type="text/javascript"><\/script>',
+					'<script src="./formGenerator_files/bootstrap.min.js" type="text/javascript"><\/script>',
+					'<script src="./formGenerator_files/formContent.js" type="text/javascript"><\/script>'
+				],
+				elementTemplate : {
+					"layout-row":{name:"行", tag:"div", html:""},
+					"layout-column":{name:"列", tag:"div", html:""},
+					"component-text":{name:"输入框", tag:"input", html:"<input type='text' class='form-control input-sm' data-type='component-text' data-key='{data-key}'/>"},
+					"component-date":{name:"时间选择器", tag:"input", html:"<input type='text' class='form-control input-sm' data-type='component-date' data-key='{data-key}'/>"},
+					"component-label":{name:"文本标签", tag:"label", html:"<label data-type='component-label' data-key='{data-key}'>标签</label>"},
+					"component-radio":{name:"单选框", tag:"label", html:"<label data-type='component-radio' data-key='{data-key}'><input type='radio'/><span>单选框</span></label>"},
+					"component-checkbox":{name:"复选框", tag:"label", html:"<label data-type='component-checkbox' data-key='{data-key}'><input type='checkbox'/><span>复选框</span></label>"},
+					"component-button":{name:"按钮", tag:"button", html:"<button class='btn btn-default btn-sm' data-type='component-button' data-key='{data-key}'>按钮</button>"},
+					"component-select":{name:"下拉框", tag:"select", html:"<select class='form-control input-sm' data-type='component-select' data-key='{data-key}'></select>"},
 				}
-
-                var node = fg.treeview.nodeTree.getCurrentNode();
-                var tag = fg.getElementTagByType(node.type);
-
-                var $html = $(html);
-                if(node.id == "root"){
-					$form.append($html);
-				}else{
-					var $ele = $form.find(tag+"[data-key='"+node.id+"']:first");
-					$ele.append($html);
-				}
-
-				ele.key = $html.attr("data-key");
-
-				//写入树节点
-				var name = fg.getElementNameByType(ele.type);
-				fg.treeview.nodeTree.add(ele.key, name, "", {type:ele.type});
-
-				var $childs = $form.find(tag+"[data-key='"+ele.key+"']").children("div[data-key]");
-				
-				$childs.each(function(){
-					var $el = $(this);
-					fg.treeview.nodeTree.add(
-						$el.attr("data-key"), 
-						fg.getElementNameByType($el.attr("data-type")), 
-						ele.key, 
-						{type : $el.attr("data-type")}
-					);
-				});
-			},
-			modify : function(){
-			},
-			remove : function(key, type){
-				var $ele = fg.getDomElement(key, type);
-				if($ele.length == 0) return;
-                $ele.remove();
-
-				fg.treeview.nodeTree.remove(key);
-			},
-			setStyle : function(key, type, styles){
-				var $ele = fg.getDomElement(key, type);
-				if($ele.length == 0) return;
-				if(styles){
-				    $ele.attr("style", styles);
-				}
-			},
-			setProperty : function(key, type, properties){
-                var $ele = fg.getDomElement(key, type);
-				if($ele.length == 0) return;
-				for(var i in properties){
-					var pro = properties[i];
-				    $ele.attr("data-"+i, pro);
-                    if(i == "display-name"){
-						var tag = $ele[0].tagName;
-                        if(tag.toLowerCase() == "label"){
-							if($ele.find("span").length == 0){
-							    $ele.append("<span></span>");
-							}
-							$ele.find("span").text(pro);
-						}else if(tag.toLowerCase() == "input"){
-						    $ele.val(pro);
-						}else if(tag.toLowerCase() == "div"){
-						    $ele.text(pro);
-						}else if(tag.toLowerCase() == "select"){
-						    $ele.val(pro);
-						}else if(tag.toLowerCase() == "button"){
-						    $ele.html(pro);
-						}
-					}
-				}
-			},
-			getStyleWithProperty : function(key, type){
-			    var $ele = fg.getDomElement(key, type);
-				if($ele.length == 0) return;
-                
-				var sty = {};
-				var style = $ele.attr("style");
-				if(style){
-					var styles = style.split(";");
-					for(var i=0; i<styles.length; i++){
-						var s = styles[i];
-						var ss = s.split(":");
-						sty[ss[0]] = ss[1];
-					}
-				}
-
-                var attrs = {};
-				$.each($ele[0].attributes, function() {
-					var index = this.name.indexOf("data-");
-					if(index > -1){
-						var n = this.name.substr(index + 5, this.name.length - 5);
-						attrs[n] = this.value;
-					}
-				});
-
-				return {styles: sty, properties: attrs};
+		    },
+			get : function(){
+				return this[this.defaultx];
 			}
 		},
-		getDomElement : function(key, type){
-			return this.formContent.ref().find(fg.getElementTagByType(type)+"[data-key='"+key+"']");
+		//封装对表单区元素查询的操作
+		querySelector : function(selector){
+            return this.formContent.innerRef().find(selector);
 		},
-		elementTemplate : {
-            "layout-row":{name:"行", tag:"div", html:""},
-			"layout-column":{name:"列", tag:"div", html:""},
-			"component-text":{name:"输入框", tag:"input", html:"<input type='text' class='form-control input-sm' data-key='{data-key}'/>"},
-			"component-radio":{name:"单选框", tag:"label", html:"<label data-key='{data-key}'><input type='radio'/></label>"},
-			"component-checkbox":{name:"复选框", tag:"label", html:"<label data-key='{data-key}'><input type='checkbox'/></label>"},
-			"component-button":{name:"按钮", tag:"button", html:"<button class='btn btn-default btn-sm' data-key='{data-key}'></button>"},
-			"component-select":{name:"下拉框", tag:"select", html:"<select class='form-control input-sm' data-key='{data-key}'></select>"},
-			"component-date":{name:"时间选择器", tag:"input", html:"<input type='text' class='form-control input-sm' data-key='{data-key}'/>"},
-			"component-label":{name:"文本标签", tag:"label", html:"<label data-key='{data-key}'></label>"}
-		},
+		//根据组件类型标签名
 		getElementTagByType : function(type){
-			if(!this.elementTemplate[type]) return "";
-			return this.elementTemplate[type].tag;
+			if(!fg.style.get().elementTemplate[type]) return "";
+			return fg.style.get().elementTemplate[type].tag;
 		},
+		//根据组件类型获取组件名称
 		getElementNameByType : function(type){
-			if(!this.elementTemplate[type]) return "";
-			return this.elementTemplate[type].name;
+			if(!fg.style.get().elementTemplate[type]) return "";
+			return fg.style.get().elementTemplate[type].name;
 		},
+		//根据组件类型获取组件HTML
 		getComponentHtml : function(type){
 			var t = type.substr("component-".length);
-			return this.elementTemplate[type].html.replace('{data-key}', fg.getUUID(t+"-"));
+			return fg.style.get().elementTemplate[type].html.replace('{data-key}', fg.getUUID(t+"-"));
 		},
+		//获取布局HTML
 		getLayoutHtml : function(layoutData, colnum){
 			var ld = [];
 
@@ -569,6 +435,7 @@
 			}
 			return html;
 		},
+		//获取布局预览HTML
 		getPreviewHtml : function(layoutData){
 			var ld = [];
 
@@ -600,10 +467,12 @@
 			}
 			return html;
 		},
+		//构建布局预览HTML
 		buildLayoutPreview : function(){
 			var $defaultLayout = $("#defaultLayout");
 			$defaultLayout.html(this.getPreviewHtml(this.data.initLayout));
 		},
+		//数据处理
 		data : {
 		    initLayout : [
 			    { colnum : 1, key : 1, type : "layout-row"},
@@ -623,6 +492,7 @@
 				return null;
 			}
 		},
+		//弹出框定义区
 		box : {
 			init : function(){
 			    for(var i in this){
@@ -631,6 +501,7 @@
 					}
 				}
 			},
+			//布局
 		    newFormBox : {
 			    define : function(){
 				    $("#newFormBox").ncBox({event : {
@@ -651,10 +522,13 @@
 									 fg.formContent.add(fg.data.setLayout);
 								}
 							}
+
+							this.close();
 						}
 					}});
 				}
 			},
+			//组件
 			newComponentBox : {
 			    define : function(){
 					myself = this;
@@ -665,6 +539,8 @@
 					    save : function(){
                             var type = myself.currentComponent;
                             fg.formContent.add({type:type});
+
+							this.close();
 						}
 					}});
 				}
@@ -707,6 +583,8 @@
                             
 							fg.formContent.setStyle(key, type, styles);
                             fg.formContent.setProperty(key, type, properties);
+
+							this.close();
 						}
 					}});
 				}
@@ -722,6 +600,200 @@
 				}
 			}
 		},
+		//表单显示区
+		formContent : {
+			init : function(){
+			    var defaultStyle = fg.style.get();
+				var doc = this.ref()[0].contentWindow.document;
+				
+				//doc.designMode="on";
+
+				for(var i = 0; i < defaultStyle.lib.length; i++){
+				    doc.write(defaultStyle.lib[i]);
+				}
+
+                doc.write("<body style='padding:0px 15px;'></body>");
+
+				this.ref().height($(window).height() - 60);
+			},
+			ref : function(){
+			    return $("#formContent");
+			},
+			innerRef : function(){
+			    return this.ref()[0].contentWindow.$("body");
+			},
+			bindEvent : function(){
+				var $elements = this.innerRef().find("[data-key]");
+                
+				$elements.unbind("click");
+				$elements.bind("click", function(e){
+					fg.treeview.nodeTree.setCurrentNode($(this).attr("data-key"));
+                    e.stopPropagation();
+				});
+			},
+		    add : function(element){
+				var ele = $.extend({}, element);
+
+				var html = "";
+				var $body = this.innerRef();
+
+				if(ele.type.indexOf("layout-") == 0){
+				    html = fg.getLayoutHtml(ele, 1, "f");
+				}else if(ele.type.indexOf("component-") == 0){
+				    html = fg.getComponentHtml(ele.type);
+				}
+
+                var node = fg.treeview.nodeTree.getCurrentNode();
+                var tag = fg.getElementTagByType(node.type);
+
+                var $html = $(html);
+                if(node.id == "root"){
+					$body.append($html);
+				}else{
+					var $ele = $body.find(tag+"[data-key='"+node.id+"']:first");
+					$ele.append($html);
+				}
+
+				ele.key = $html.attr("data-key");
+
+				//写入树节点
+				var name = fg.getElementNameByType(ele.type);
+				fg.treeview.nodeTree.add(ele.key, name, "", {type:ele.type});
+
+				var $childs = $body.find(tag+"[data-key='"+ele.key+"']").children("div[data-key]");
+				
+				$childs.each(function(){
+					var $el = $(this);
+					fg.treeview.nodeTree.add(
+						$el.attr("data-key"), 
+						fg.getElementNameByType($el.attr("data-type")), 
+						ele.key, 
+						{type : $el.attr("data-type")}
+					);
+				});
+
+				this.bindEvent();
+			},
+			modify : function(){
+			},
+			remove : function(key, type){
+				var $ele = this.getDomElement(key, type);
+				if($ele.length == 0) return;
+                $ele.remove();
+
+				fg.treeview.nodeTree.remove(key);
+			},
+			setStyle : function(key, type, styles){
+				var $ele = this.getDomElement(key, type);
+				if($ele.length == 0) return;
+				if(styles){
+				    $ele.attr("style", styles);
+				}
+			},
+			setProperty : function(key, type, properties){
+                var $ele = this.getDomElement(key, type);
+				if($ele.length == 0) return;
+				for(var i in properties){
+					var pro = properties[i];
+				    $ele.attr("data-"+i, pro);
+                    if(i == "display-name"){
+						var tag = $ele[0].tagName;
+                        if(tag.toLowerCase() == "label"){
+							if($ele.find("span").length == 0){
+							    $ele.append("<span></span>");
+							}
+							$ele.find("span").text(pro);
+						}else if(tag.toLowerCase() == "input"){
+						    $ele.val(pro);
+						}else if(tag.toLowerCase() == "div"){
+						    $ele.text(pro);
+						}else if(tag.toLowerCase() == "select"){
+						    $ele.val(pro);
+						}else if(tag.toLowerCase() == "button"){
+						    $ele.html(pro);
+						}
+					}
+				}
+			},
+			getStyleWithProperty : function(key, type){
+			    var $ele = this.getDomElement(key, type);
+				if($ele.length == 0) return;
+                
+				var sty = {};
+				var style = $ele.attr("style");
+				if(style){
+					var styles = style.split(";");
+					for(var i=0; i<styles.length; i++){
+						var s = styles[i];
+						var ss = s.split(":");
+						sty[ss[0]] = ss[1];
+					}
+				}
+
+                var attrs = {};
+				$.each($ele[0].attributes, function() {
+					var index = this.name.indexOf("data-");
+					if(index > -1){
+						var n = this.name.substr(index + 5, this.name.length - 5);
+						attrs[n] = this.value;
+					}
+				});
+
+				return {styles: sty, properties: attrs};
+			},
+			getDomElement : function(key, type){
+				return this.innerRef().find(fg.getElementTagByType(type)+"[data-key='"+key+"']");
+			}
+		},
+		//表格区
+		table : {
+			init : function(){
+			    for(var i in this){
+				    if(this[i].define){
+					    this[i].define();
+					}
+				}
+			},
+			elementProperties : {
+				ref :function(){
+				    return $("#elementProperties");
+				},
+				get : function(){
+					return this.ref().getNcTable();
+				},
+				define : function(){
+					var ep = this;
+					var $ep = this.ref(),
+					    nt = $ep.ncTable({
+							selectRowMode : "none",
+							dataGroup : {
+								formatter : function(item){
+									return "<span style='font-size:12px;font-weight:bold;'>"+item.group+"</span>";
+								}
+							},
+							event : {
+								valueChanged : function(rowIndex, cellName, cellValue){
+									var rowData = this.getCurrentRowData(rowIndex);
+									fg.currentElement.setProp(rowData.code, cellValue);
+								}
+							}
+					    });
+
+					nt.setHeight($(window).height() - 22);
+
+                    var propData = [];
+                    for(var i in fg.currentElement.propName.get()){
+						var item = fg.currentElement.propName.get()[i];
+						if(item.hidden) continue;
+						propData.push({name: item.display, value: "", code: i, group: item.group});
+                    }
+
+					nt.loadLocalData(propData);
+					nt._groupExpandOrCollpaseAll(true);
+				}
+			}
+		},
+		//事件定义区
 		event : {
 			init : function(){
 			    for(var i in this){
@@ -815,11 +887,11 @@
 					var myself = this;
 				    $("#clearDesignStyle").click(function(){
 						if(myself.isClear){
-                            var $ele = $("#formContent").find(".panel-c,.border-c");
+                            var $ele = fg.querySelector(".panel-c,.border-c");
 							$ele.removeClass("panel-c").addClass("panel-f");
 							$ele.removeClass("border-c").addClass("border-f");
 						}else{
-						    var $ele = $("#formContent").find(".panel-f,.border-f");
+						    var $ele = fg.querySelector(".panel-f,.border-f");
 							$ele.removeClass("panel-f").addClass("panel-c");
 							$ele.removeClass("border-f").addClass("border-c");
 						}
@@ -829,6 +901,7 @@
 				}
 			}
 		},
+		//树状视图区
 		treeview : {
 			init : function(){
 			    for(var i in this){
@@ -838,32 +911,277 @@
 				}
 			},
 		    nodeTree : {
+				ref : function(){
+				    return $("#nodeTree");	
+				},
 			    define : function(){
-				    $("#nodeTree").ncTreeview({
+					var nt = this;
+				    this.ref().ncTreeview({
 						 showIcon:true,
-					     nodeClick:function(node){
-                             var key = node.id;
-							 $("#formContent").find("div[data-key]").removeClass("focus");
-	                         var $ele = $("#formContent").find("div[data-key='"+key+"']:first");
-							 $ele.addClass("focus");
+					     nodeClick:function(node, e){
+							 nt.setCurrentNode(node.id);
+					     },
+						 nodeMouseDown:function(node, e){
+                             if(e.which == 3){
+                                 fg.treeview.nodeTree.contextMenu.show(node, e);
+						     }
 					     }
 				    });
-					var tv = $("#nodeTree").getNcTreeview();
+
+					var tv = this.ref().getNcTreeview();
+
 					tv.setHeight($(window).height() - 30);
 					tv.load([{id:"root", name:"模板"}]);
 					tv.setCurrentNode("root");
 				},
 				add : function(id, name, pid, attributes){
-					var tv = $("#nodeTree").getNcTreeview();
+					var tv = this.ref().getNcTreeview();
 					pid = pid?pid:tv.getCurrentNode().id;
 
 				    tv.insertNodeObj({id:id, name:name, pid:pid, attributes:attributes});
 				},
 				remove : function(id){
-				    $("#nodeTree").getNcTreeview().deleteNode(id);
+				    this.ref().getNcTreeview().deleteNode(id);
 				},
 				getCurrentNode : function(){
-				    return $("#nodeTree").getNcTreeview().getCurrentNode();
+				    return this.ref().getNcTreeview().getCurrentNode();
+				},
+				setCurrentNode : function(id){
+				    this.ref().getNcTreeview().setCurrentNode(id, true, true);
+					
+					fg.querySelector("[data-key]").removeClass("focus");
+
+				    var $ele = fg.querySelector("[data-key='"+id+"']:first");
+				    $ele.addClass("focus");
+
+				    var propData = fg.currentElement.set($ele);
+				    var nt = fg.table.elementProperties.get();
+
+				    nt.loadLocalData(propData);
+				    nt._groupExpandOrCollpaseAll(true);
+				},
+				//右键菜单
+				contextMenu : {
+					show : function(node, e){
+						var htm = '<ul id="nodeRightMenu" class="nodeRightMenu">' +
+								      '<li name="copy" command="copyElement"><a><i class="fa fa-copy" style="width:30px"></i>复制元素</a></li>' +
+									  '<li name="paste" command="pasteElement"><a><i class="fa fa-paste" style="width:30px"></i>粘贴元素</a></li>' +
+									  '<li name="delete" command="deleteElement"><a><i class="fa fa-trash-o" style="width:30px;font-size:17px;"></i>删除元素</a></li>' +
+								  '</ul>';
+
+						if($("#nodeRightMenu").length == 0){
+							$("body").append(htm);
+							$("body").click(function(e){
+								var $menu = $("#nodeRightMenu");
+								if(e.pageX < $menu.offset().left || e.pageX > $menu.offset().left + $menu.width() ||
+								   e.pageY < $menu.offset().top || e.pageY > $menu.offset().top + $menu.height()){
+									$menu.removeClass("show");
+								}
+                              
+							});
+							$("#nodeRightMenu").find("li").click(function(){
+								var $this = $(this), com = $this.attr("command"),
+								    node = fg.treeview.nodeTree.getCurrentNode(),
+								    element = fg.querySelector("[data-key='"+node.id+"']:first");
+								fg.command[com].call($this, node, element);
+                                
+								$menu.removeClass("show");
+							});
+						}
+
+                        var $menu = $("#nodeRightMenu"), $node = $(e.target);
+						$menu.css({left: $node.offset().left, top: $node.offset().top + $node.height() + 5});
+                        $menu.addClass("show");
+					}
+				}
+			}
+		},
+		//当前元素
+		currentElement : {
+			get : function(){
+                return this._element;
+			},
+			set : function($element){
+				var propMap = {};
+				var style = $element.attr("style"),
+					display = $element.attr("data-display-name"),
+					datasource = $element.attr("data-datasource-name");
+
+				propMap["datasource-name"] = datasource;
+				propMap["display-name"] = display;
+
+				//解析样式
+				var styles = style ? style.split(";") : [];
+				for(var i = 0; i < styles.length; i++){
+					var kv = styles[i].split(":");
+					if(!kv[0].trim()) continue;
+					propMap[kv[0].trim()] = kv[1] ? kv[1].trim() : "";
+				}
+				
+				//分解样式
+				var propData = {};
+				for(var i in this.propName.get()){
+					var item = this.propName.get()[i];
+					if(item.children && propMap[i]){
+						var p = this.propName.resolve(i, item.children, propMap[i]);
+						for(var j in p){
+							propData[j].value = p[j];
+						}
+					}else if(!item.hidden){
+						propData[i] = {name: item.display, value: propMap[i], code: i, group: item.group};
+					}
+				}
+
+                this._element = $element;
+				this.setPropData(propData);
+
+                //生成返回列表
+				var result = [];
+				for(var j in propData){
+					result.push(propData[j]);
+				}
+
+				return result;
+			},
+			setProp : function(key, value){
+				if(!this._element) return;
+
+				if(!this._propData){
+					this._propData = {};
+				}
+
+                this._propData[key].value = value;
+
+                var style = [], custom = [];
+                for(var i in this._propData){
+					var item = this._propData[i],
+					    isStyle = this.propName.isStyle(item.code);
+                    if(isStyle){
+						if(item.value){
+							style.push(item.code + ":" + this.propName.getUnit(item.code, item.value));
+						}
+                    }else{
+                        custom.push({name: item.code, value: item.value});
+                    }
+                }
+
+                if(style.length > 0){
+					this._element.attr("style", style.join(";"));
+                }
+                
+				for(var j in custom){
+					this._element.attr("data-" + custom[j].name, custom[j].value);
+					if(custom[j].name == "display-name"){
+						this.setValue(custom[j].value);
+					}
+				}
+			},
+			setValue : function(value){
+                var type = this.getElementType();
+				if(type == "component-label"){
+                    this._element.text(value);
+				}else if(type == "component-text"){
+					this._element.val(value);
+				}else if(type == "component-radio"){
+					this._element.find("span").text(value);
+				}else if(type == "component-checkbox"){
+					this._element.find("span").text(value);
+				}else if(type == "component-button"){
+					this._element.text(value);
+				}else if(type == "component-select"){
+				}else if(type == "component-date"){
+				}
+			},
+			getElementType : function(){
+			    return this._element.attr("data-type");	
+			},
+			setPropData : function(propData){
+				this._propData = this._propData ? this._propData : {};
+				this._propData = $.extend(this._propData, propData);
+			},
+			propName : {
+				defaultx : "_Zh_CN",
+				_Zh_CN : {
+					"datasource-name" : {display: "数据源名称", group:"数据源", type:"custom"},
+					"display-name" : {display: "显示文本", group:"基本属性", type:"custom"},
+					"text-align" : {display: "文本位置", group:"基本属性", type:"style"},
+					"background-color" : {display: "背景色", group:"基本属性", type:"style"},
+					"color" : {display: "前景色", group:"基本属性", type:"style"},
+					"width" : {display: "宽度", group:"大小", type:"style", unit:"px"},
+					"height" : {display: "高度", group:"大小", type:"style", unit:"px"},
+					"line-height" : {display: "行间距", group:"大小", type:"style", unit:"px"},
+					"font-family" : {display: "字体类型", group:"字体", type:"style"},
+					"font-size" : {display: "字体大小", group:"字体", type:"style"},
+					"font-weight" : {display: "字体粗细", group:"字体", type:"style"},
+					"margin-top" : {display: "外边距-上", group:"外边距", type:"style", unit:"px"},
+					"margin-right" : {display: "外边距-右", group:"外边距", type:"style", unit:"px"},
+					"margin-bottom" : {display: "外边距-下", group:"外边距", type:"style", unit:"px"},
+					"margin-left" : {display: "外边距-左", group:"外边距", type:"style", unit:"px"},
+					"margin" : {display: "外边距", group:"外边距", type:"style", hidden:true, 
+								children:["margin-top","margin-right","margin-bottom","margin-left"], unit:"px"},
+					"padding-top" : {display: "内边距-上", group:"内边距", type:"style", unit:"px"},
+					"padding-right" : {display: "内边距-右", group:"内边距", type:"style", unit:"px"},
+					"padding-bottom" : {display: "内边距-下", group:"内边距", type:"style", unit:"px"},
+					"padding-left" : {display: "内边距-左", group:"内边距", type:"style", unit:"px"},
+					"padding" : {display: "内边距", group:"外边距", type:"style", hidden:true, 
+								 children:["padding-top","padding-right","padding-bottom","padding-left"], unit:"px"},
+					"border-top" : {display: "边框-上", group:"边框", type:"style", unit:"px"},
+					"border-right" : {display: "边框-右", group:"边框", type:"style", unit:"px"},
+					"border-bottom" : {display: "边框-下", group:"边框", type:"style", unit:"px"},
+					"border-left" : {display: "边框-左", group:"边框", type:"style", unit:"px"},
+					"border" : {display: "边框", group:"外边距", type:"style", hidden:true, 
+								children:["border-top","border-right","border-bottom","border-left"], unit:"px"}
+				},
+				//分解样式
+				resolve : function(name, children, value){
+					if(!value) value = "";
+
+					var map = {};
+
+					if(name == "margin" || name == "padding"){
+						var arr = value ? value.split(" ") : [];
+						for(var i = 0; i < children.length; i++){
+							if(arr.length == 1){
+								map[children[i]] = arr[0];
+							}else if(arr.length == 2){
+								map[children[i]] = arr[i%2];
+							}else if(arr.length == 3){
+								map[children[i]] = i < 3 ? arr[i] : 0;
+							}else if(arr.length == 4){
+								map[children[i]] = arr[i];
+							}else{
+								map[children[i]] = 0;
+							}
+						}
+					}else if(name == "border"){
+						for(var i = 0; i < children.length; i++){
+							map[children[i]] = value ? value : 0;
+						}
+					}
+
+					return map;
+				},
+				get : function(){
+					return this[this.defaultx];
+				},
+				exist : function(name){
+					return this[this.defaultx][name];
+				},
+				isStyle : function(name){
+					var prop = this[this.defaultx][name];
+					return prop && prop.type == "style";
+				},
+				isCustom : function(name){
+					var prop = this[this.defaultx][name];
+					return prop && prop.type == "custom";
+				},
+				getUnit : function(name, value){
+					if(!value) return "";
+
+					var prop = this[this.defaultx][name];
+					var unit = prop.unit ? prop.unit : "";
+
+                    return value.indexOf(unit) > -1 ? value : (value + unit);
 				}
 			}
 		},
@@ -882,6 +1200,18 @@
 			var uuid = s.join("");
 
 			return prefix + uuid;
+		},
+		//通用命令
+		command : {
+			copyElement : function(node, element){
+				alert(element[0].outerHTML);
+			},
+			pasteElement : function(node, element){
+				
+			},
+			deleteElement : function(node, element){
+				
+			}
 		}
 	}
 

@@ -1,0 +1,427 @@
+.ncTable{
+    border: 1px solid #e3e3e3;
+    /* border-radius: 5px; */
+    /* box-shadow: 0 0 5px 0 #ccc; */
+    background-color:#fff;
+    float:left;
+    width:100%;
+    box-sizing:border-box;
+    position:relative;
+}
+
+.ncTable .nc-loading{
+	position:absolute;
+	float:left;
+}
+
+.ncTable .nc-fail{
+	position:absolute;
+	float:left;
+}
+
+.ncTable>.ncTableTitle{
+	float:left;
+	width:100%;
+	font-size:12px;
+    font-family: 'MacOsFont', 'Microsoft Yahei', 'Î¢ÈíÑÅºÚ', Verdana, Arial, Helvetica, sans-serif !important;
+    padding:3px 8px;
+    position:relative;
+    box-sizing:border-box;
+    background-color: #fff;
+    color: #000;
+}
+
+/* .ncTable>.ncTableTitle:before{
+	position: absolute;
+    top: 5px;
+    left:4px;
+    display: inline-block;
+    border-top: 8px solid #c5f7ff;
+    border-right: 2px solid #c5f7ff;
+    border-bottom: 8px solid #c5f7ff;
+    border-left: 2px solid #c5f7ff;
+    content: '';
+} */
+
+.ncTable>.ncTableHead,
+.ncTable>.ncTableRowHeadHead{
+	float:left;
+    width:100%;
+    background-color:#fff;
+    overflow:hidden;
+    box-sizing:border-box;
+    user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+.ncTable>.ncTableHead>.ncTableRow,
+.ncTable>.ncTableRowHeadHead>.ncTableRow{
+    float:left;
+    width:100%;	
+    box-sizing:border-box;
+}
+
+.ncTable>.ncTableHead>.ncTableEmptyRow{
+	float:left;
+    width:100%;	
+    box-sizing:border-box;
+}
+
+.ncTable>.ncTableRowHeadHead>.ncTableRow{
+	border-right:1px solid #ddd;
+}
+
+.ncTable>.ncTableHead>.ncTableRow>.ncTableHeadItem,
+.ncTable>.ncTableRowHeadHead>.ncTableRow>.ncTableHeadItem{
+    padding:8px 5px;
+    float:left;
+    font-size:12px;
+    font-family: 'MacOsFont', 'Microsoft Yahei', 'Î¢ÈíÑÅºÚ', Verdana, Arial, Helvetica, sans-serif !important;
+    box-sizing:border-box;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-top:1px solid #ddd;
+    background-color:#eee;
+    height:32px;
+    line-height:1;
+}
+
+.ncTable>.ncTableHead>.ncTableRow>.ncTableHeadItem{
+	border-right:1px solid #ddd;
+}
+
+.ncTable>.ncTableHead>.ncTableRow>.ncTableHeadItem.hidden{
+    display:none;
+}
+
+.ncTable>.ncTableHead>.ncTableRow.search,
+.ncTable>.ncTableRowHeadHead>.ncTableRow.search{
+}
+
+.ncTable>.ncTableHead>.ncTableRow.search>.ncTableHeadItem,
+.ncTable>.ncTableRowHeadHead>.ncTableRow.search>.ncTableHeadItem{
+    padding:3px 5px;
+    border-bottom:1px solid #ddd;
+    border-right:1px solid #ddd;
+    height:32px;
+}
+
+.ncTable>.ncTableHead>.ncTableRow.search>.ncTableHeadItem input,
+.ncTable>.ncTableRowHeadHead>.ncTableRow.search>.ncTableHeadItem input{
+	float:left;
+	width:100%;
+	padding:2px;
+	height:22px;
+	border-radius:3px;
+	border:1px solid #bbb;
+	font-size:inherit;
+	box-sizing:border-box;
+}
+
+.ncTable>.ncTableHead>.ncTableRow.search>.ncTableHeadItem select,
+.ncTable>.ncTableRowHeadHead>.ncTableRow.search>.ncTableHeadItem select{
+	float:left;
+	width:100%;
+	height:22px;
+	padding:1px;
+	border-radius:3px;
+	border:1px solid #bbb;
+	box-sizing:border-box;
+}
+
+.ncTable .searchNcButton{
+	display: inline-block;
+    margin-bottom: 0;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius:4px;
+    text-decoration: none;
+    outline:none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.ncTable .searchNcButton.danger{
+	background-color: red;
+    color: #fff;
+    border: 0px;
+}
+
+.ncTable .searchNcButton:hover {
+    opacity: 0.8;
+}
+
+.ncTable .searchNcButton:active{
+	border:1px solid #1c84c6;
+	opacity:1;
+}
+
+.ncTable>.ncTableRowHeadHead{
+	float:left;
+	box-sizing:border-box;
+	overflow:hidden;
+}
+
+.ncTable>.ncTableRowHead{
+	float:left;
+	box-sizing:border-box;
+	overflow:hidden;
+}
+
+.ncTable>.ncTableRowHead>.ncTableRow{
+	border-bottom:0px;
+	border-right:1px solid #ddd;
+	float:left;
+	box-sizing:border-box;
+	width:100%;
+}
+
+.ncTable>.ncTableBody{
+	float:left;
+	width:100%;
+    overflow:auto;
+    box-sizing:border-box;
+    position:relative;
+}
+
+.ncTable>.ncTableBody>.ncTableRow{
+	float:left;
+    width:100%;
+    box-sizing:border-box;
+    /* border-bottom:1px solid #ddd;
+    border-right:1px solid #ddd; */
+}
+
+.ncTable>.ncTableBody>.ncTableRow.hover,
+.ncTable>.ncTableRowHead>.ncTableRow.hover{
+	background-color:rgba(43,58,179,0.36);
+	cursor:default;
+}
+
+.ncTable>.ncTableBody>.ncTableRow.focus,
+.ncTable>.ncTableRowHead>.ncTableRow.focus{
+	background-color:rgba(43,58,179,0.56);
+	cursor:default;
+}
+
+.ncTable>.ncTableRowHead>.ncTableRow>.ncTableBodyItem,
+.ncTable>.ncTableBody>.ncTableRow>.ncTableBodyItem{
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+    padding:5px 2px 5px 4px;
+    float:left;
+    font-size:12px;
+    font-family: 'MacOsFont', 'Microsoft Yahei', 'Î¢ÈíÑÅºÚ', Verdana, Arial, Helvetica, sans-serif !important;
+    box-sizing:border-box;
+    border-bottom:1px solid #ddd;
+	height:32px;
+}
+
+.ncTable>.ncTableBody>.ncTableRow>.ncTableBodyItem:not(.hidden){
+	border-right:1px solid #ddd;
+}
+
+.ncTable>.ncTableBody>.ncTableRow>.ncTableBodyItem.fillCol{
+	border:0px;
+}
+
+.ncTable>.ncTableBody>.ncTableRow>.ncTableBodyItem>a{
+	font-size:12px;
+	color:rgba(27, 134, 26, 0.64);
+	cursor:pointer;
+}
+
+.ncTable>.ncTableBody>.ncTableRow.hover>.ncTableBodyItem .nc-badge,
+.ncTable>.ncTableBody>.ncTableRow.focus>.ncTableBodyItem,
+.ncTable>.ncTableBody>.ncTableRow.focus>.ncTableBodyItem>a{
+	color:#fff!important;
+}
+
+.ncTable>.ncTableRowHead>.ncTableRow:hover>.ncTableBodyItem,
+.ncTable>.ncTableRowHead>.ncTableRow:hover>.ncTableBodyItem .nc-badge,
+.ncTable>.ncTableRowHead>.ncTableRow.hover>.ncTableBodyItem,
+.ncTable>.ncTableRowHead>.ncTableRow.hover>.ncTableBodyItem .nc-badge,
+.ncTable>.ncTableRowHead>.ncTableRow.focus>.ncTableBodyItem,
+.ncTable>.ncTableRowHead>.ncTableRow.focus>.ncTableBodyItem>a{
+	color:#fff!important;
+}
+
+.ncTable>.ncTableBody>.ncTableRow>.ncTableBodyItem.hidden{
+    display:none;
+}
+
+.ncTable>.ncTablePager{
+	float:left;
+    width:100%;
+    padding:5px 2px;
+    background-color:#eee;
+    box-sizing:border-box;
+}
+
+.ncTable>.ncTablePager>.ncPagerArea{
+    width:33%;
+    float:left;
+    font-size:12px;
+    padding:0px 5px;
+    box-sizing:border-box;
+}
+
+.ncTable>.ncTablePager>.ncPagerArea.center{
+    text-align:center;
+    padding-top:3px;
+    line-height:2;
+}
+
+.ncTable>.ncTablePager>.ncPagerArea.right{
+    text-align:right;
+    padding-top:5px;
+}
+
+.ncTable>.ncTablePager .ncPagerInput{
+    padding:3px;
+    border:1px solid #ccc;
+    border-radius:4px;
+    width:32px;
+    height:18px;
+    box-sizing:border-box;
+}
+
+.ncTable>.ncTablePager select{
+	height:26px!important;
+}
+
+.ncTable>.ncTablePager .ncPagerInput.long{
+    width:100px;
+}
+
+.ncTable>.ncTablePager .ncPagerInput.middle{
+    width:50px;
+}
+
+.ncTable>.ncTablePager .ncPagerInput.short{
+    width:30px;
+}
+
+.ncTable>.ncTablePager .ncPagerPrev,
+.ncTable>.ncTablePager .ncPagerNext,
+.ncTable>.ncTablePager .ncPagerFirst,
+.ncTable>.ncTablePager .ncPagerLast{
+    width:18px;
+    height:20px;
+    text-align:center;
+    background-color:transparent;
+    color:#000;
+    padding:1px 2px 2px 2px;
+    font-size:12px;
+    display:inline-block;
+    border-radius:3px;
+    margin:0px 5px;
+    box-sizing: border-box;
+    cursor:pointer;
+}
+
+.ncTable>.ncTablePager .ncPagerPrev{
+    padding-left:1px;
+    padding-right:3px;
+}
+
+.ncTable>.ncTablePager .ncPagerNext{
+    padding-left:3px;
+    padding-right:1px;
+}
+
+.ncTable>.ncTablePager .ncPagerTotalNum{
+    margin-top:5px;
+}
+
+.nc-badge{
+	padding:2px 4px;
+	border:1px solid #ddd;
+	border-radius:3px;
+	font-size:9px;
+	text-align:center;
+}
+
+.nc-badge.badge-success{
+	background-color:rgba(27, 134, 26, 0.64);
+	color:#fff;
+}
+
+.nc-badge.badge-warning{
+	background-color:rgb(214, 222, 20);
+	color:#fff;
+}
+
+.nc-badge.badge-danger{
+	background-color:red;
+	color:#fff;
+}
+
+.nc-badge.badge-default{
+	color:#d2b2b2;
+}
+
+.ncTable .ncTableRow .nc-merge-col{
+	float:right;
+	width:20px;
+	text-align:right;
+}
+
+.ncTable a.attrSubGrid>i{
+	font-size:16px;
+}
+
+.ncTable .ncTableRow>.ncTableRowSubGrid{
+	float:left;
+	width:100%;
+	border-top:1px solid #ddd;
+	padding:5px 5px 5px 5px;
+	box-sizing:border-box;
+}
+
+.ncTable>.ncTableBody>.ncTableRow>.ncTableRowSubGrid,
+.ncTable>.ncTableBody>.ncTableRow.focus>.ncTableRowSubGrid{
+	background-color:#fff;
+}
+
+.ncTable .ncTableRow.group,
+.ncTable .ncTableRow.groupFix{
+	padding:0px;
+}
+
+.ncTable .ncTableRow.group>.ncTableBodyItem{
+	border-bottom:1px solid #ddd;
+	border-right:1px solid #ddd;
+	height:32px;
+}
+
+.ncTable .ncTableRow.group>.ncTableBodyItem.fillCol{
+	border:0px;
+}
+
+.ncTable .ncTableRow.groupFix{
+	text-align:center;
+}
+
+.ncTable .ncTableRow.group:hover,
+.ncTable .ncTableRow.groupFix:hover{
+}
+
+.ncTable .ncCaret{
+	font-size : 14px;
+	padding-right:10px;
+}
+
+.ncTableCellInput{
+    width:100%;
+}

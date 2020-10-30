@@ -338,7 +338,7 @@ function __ncTreeview(option){
 		});
 
         //绑定节点点击事件
-        this._bindNodeClick = function($node, doubleTrigger){
+        this._bindNodeClick = function($node, doubleTrigger, e){
 			var $this = $node.children(".ncTreeviewNodeContent");
 
 		    if(this.$lastNode){
@@ -351,18 +351,28 @@ function __ncTreeview(option){
 
             if(doubleTrigger){
 			    if(this.option.nodeDoubleClick){
-			        this.option.nodeDoubleClick.call(this, this.getCurrentNode());
+			        this.option.nodeDoubleClick.call(this, this.getCurrentNode(), e);
 			    }
 			}else{
 			    if(this.option.nodeClick){
-			        this.option.nodeClick.call(this, this.getCurrentNode());
+			        this.option.nodeClick.call(this, this.getCurrentNode(), e);
 			    }
 			}
 		}
 
+		this._bindNodeMouseDown = function($node, e){
+			if(this.option.nodeMouseDown){
+			    this.option.nodeMouseDown.call(this, this.getCurrentNode(), e);
+			}
+		}
+
         //节点点击效果
-		this.$view.find(".ncTreeviewNodeContent").click(function(){
-			myself._bindNodeClick($(this).parent());
+		this.$view.find(".ncTreeviewNodeContent").click(function(e){
+			myself._bindNodeClick($(this).parent(), false, e);
+		});
+
+		this.$view.find(".ncTreeviewNodeContent").mousedown(function(e){
+			myself._bindNodeMouseDown($(this).parent(), e);
 		});
 
 		//节点点击效果
@@ -419,8 +429,17 @@ function __ncTreeview(option){
 			myself._bindArrowClick($(this).parent().parent());
 		}); 
 
-		$node.children(".ncTreeviewNodeContent").click(function(){
-			myself._bindNodeClick($(this).parent());
+		$node.children(".ncTreeviewNodeContent").click(function(e){
+			myself._bindNodeClick($(this).parent(), false, e);
+		});
+
+		$node.children(".ncTreeviewNodeContent").mousedown(function(e){
+			myself._bindNodeMouseDown($(this).parent(), e);
+		});
+
+		//节点点击效果
+		$node.children(".ncTreeviewNodeContent").dblclick(function(){
+			myself._bindNodeClick($(this).parent(), true);
 		});
 
 		$node.children(".ncTreeviewNodeCheck").find("label").click(function(){
@@ -486,11 +505,15 @@ function __ncTreeview(option){
 		    this.expand();
 		}
 	}
+
+	//获取父节点DOM对象
+	this._getParentDom = function(id){
+	    return this.getDomNode(id).parent().parent(".ncTreeviewNode");
+	}
 	
 	//根据ID获取该节点的父节点
 	this.getParentNode = function(id){
-	    var $node = this.getDomNode(id);
-	    var $pNode = $node.parent().parent(".ncTreeviewNode");
+	    var $pNode = this._getParentDom(id);
 	    if($pNode.length > 0){
 	    	return this._composeNode($pNode);
 	    }
@@ -514,12 +537,37 @@ function __ncTreeview(option){
 		return null;
 	}
 	
+	//根据ID获取节点
+	this.getNodeById = function(id){
+		var $node = this.$view.find(".ncTreeviewNode[node-id='"+id+"']"),
+		    $nodeContent = $node.find(".ncTreeviewNodeContent");
+		if($nodeContent.length > 0){
+			return this._composeNode($node);
+		}
+		return null;
+	}
+	
 	//设置当前节点
-	this.setCurrentNode = function(id){
+	this.setCurrentNode = function(id, single, expand){
 		if(id){
+			//设置唯一焦点
+            if(single){
+				this.$view.find(".ncTreeviewNodeContent.focus").removeClass("focus");
+            }
+
 			var $node = this.$view.find(".ncTreeviewNode[node-id='"+id+"']");
 			this.$lastNode = $node.children(".ncTreeviewNodeContent");
 			this.$lastNode.removeClass("focus").addClass("focus");
+            
+			//展开该节点所有父节点
+			if(expand){
+				var pNode = this.getParentNode(id);
+				while(pNode != null){
+					var pid = pNode.id;
+					this.expand(pid);
+					pNode = this.getParentNode(pid);
+				}
+			}
 		}else{
 			this.$view.find(".ncTreeviewNodeContent.focus").removeClass("focus");
 			this._currentNode = null;
@@ -590,13 +638,20 @@ function __ncTreeview(option){
 	}
     
 	//设置节点属性
-	this.setNodeAttribute = function(id, attrs){
+	this.setNodeAttribute = function(id, attrs, opt){
+		//更新节点属性
 	    var $node = this.$view.find(".ncTreeviewNode[node-id='"+id+"']");
 		if(typeof(attrs) == "string"){
 			attrs = JSON.parse(attrs);
 		}
 		for(var i in attrs){
 		    $node.attr("node-"+i, attrs[i]);
+		}
+		
+		//更新节点显示名称
+		if(opt && opt.nodeName){
+			$node.find(".ncTreeviewNodeContent").html(opt.nodeName);
+			this._setMaxWidth($node, true);
 		}
 	}
  
