@@ -361,6 +361,16 @@ function __ncTreeview(option){
 		}
 
 		this._bindNodeMouseDown = function($node, e){
+			var $this = $node.children(".ncTreeviewNodeContent");
+
+		    if(this.$lastNode){
+			    this.$lastNode.removeClass("focus");
+			}
+
+			$this.addClass("focus");
+
+			this.$lastNode = $this;
+
 			if(this.option.nodeMouseDown){
 			    this.option.nodeMouseDown.call(this, this.getCurrentNode(), e);
 			}
@@ -382,6 +392,44 @@ function __ncTreeview(option){
 		
 		//设置bodyWrapper宽度
 		this.$view.children(".ncTreeviewBody").children(".ncTreeviewBodyWrapper").width(this._maxWidth);
+	}
+
+    //插入DOM节点
+	this.insertDomNode = function($node, $pNode){
+		if($pNode.children(".ncTreeviewNodeChild").length == 0){
+		    $pNode.append('<div class="ncTreeviewNodeChild"></div>');
+		}
+
+		$pNode.children(".ncTreeviewNodeChild").append($node);
+
+		if($pNode.children(".ncTreeviewNodeChild").children(".ncTreeviewNode").length > 0){
+			this._setArrow($pNode);
+			var $a = $pNode.children(".ncTreeviewNodeArrow").children("a");
+            
+			$a.unbind("click");
+			$a.bind("click", function(){
+				myself._bindArrowClick($(this).parent().parent());
+			});
+		}
+
+		this._setMaxWidth($node, true);
+		this._bindNodeEvent($node);
+
+		var bindChildEvent = function($node){
+			var $children = $node.children(".ncTreeviewNodeChild").children(".ncTreeviewNode");
+			$children.each(function(){
+				var $this = $(this);
+
+				myself._setMaxWidth($this, true);
+				myself._bindNodeEvent($this);
+
+                bindChildEvent($this);
+			});
+		}
+        
+		bindChildEvent($node);
+
+		this._expandOrCollpaseNode($pNode, true);
 	}
 	
 	//插入节点
@@ -425,7 +473,14 @@ function __ncTreeview(option){
 		this._setMaxWidth($node);
 		this._setMaxWidth(null, true);
 
-        $node.children(".ncTreeviewNodeArrow").children("a").click(function(){
+        this._bindNodeEvent($node);
+
+		this.expand(pid);
+	}
+ 
+    //绑定节点事件
+	this._bindNodeEvent = function($node){
+		$node.children(".ncTreeviewNodeArrow").children("a").click(function(){
 			myself._bindArrowClick($(this).parent().parent());
 		}); 
 
@@ -444,9 +499,7 @@ function __ncTreeview(option){
 
 		$node.children(".ncTreeviewNodeCheck").find("label").click(function(){
 			 myself.bindCheckClick($(this).parent().parent());
-		 });
-
-		this.expand(pid);
+		});
 	}
 	
 	//更新节点

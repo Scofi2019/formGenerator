@@ -390,7 +390,7 @@
 				return this[this.defaultx];
 			}
 		},
-		//封装对表单区元素查询的操作
+		//封装对表单区元素的根据选择器查询的操作
 		querySelector : function(selector){
             return this.formContent.innerRef().find(selector);
 		},
@@ -519,7 +519,7 @@
                             
 							if(fg.data.setLayout){
 								for(var i = 0; i < rownum; i++){
-									 fg.formContent.add(fg.data.setLayout);
+									 fg.formContent.addNew(fg.data.setLayout);
 								}
 							}
 
@@ -538,7 +538,7 @@
 				    $("#newComponentBox").ncBox({event : {
 					    save : function(){
                             var type = myself.currentComponent;
-                            fg.formContent.add({type:type});
+                            fg.formContent.addNew({type:type});
 
 							this.close();
 						}
@@ -631,7 +631,8 @@
                     e.stopPropagation();
 				});
 			},
-		    add : function(element){
+			//增加新元素
+		    addNew : function(element){
 				var ele = $.extend({}, element);
 
 				var html = "";
@@ -671,6 +672,47 @@
 						{type : $el.attr("data-type")}
 					);
 				});
+
+				this.bindEvent();
+			},
+			//复制元素节点
+			copy : function(id){
+				var $body = this.innerRef(),
+				    $ele = $body.find("[data-key='"+id+"']:first"),
+				    $clone = $ele.clone(),
+					$node = fg.treeview.nodeTree.getDomNode(id),
+					$cloneNode = $node.clone();
+
+			    var dk = $clone.attr("data-key").split("-"),
+				    nId = fg.getUUID(dk[0] + "-");
+				$clone.attr("data-key", nId);
+
+                var nodeId = $cloneNode.attr("node-id"),
+				    dk = nodeId.split("-");
+				$cloneNode.attr("node-id", nId);
+				$cloneNode.find("[node-pid='"+nodeId+"']").attr("node-pid", nId);
+
+				var $children = $clone.find("[data-key]");
+				$children.each(function(){
+					var $this = $(this),
+					    key = $this.attr("data-key");
+
+					var k = fg.getUUID(key.split("-")[0] + "-");
+
+                    $this.attr("data-key", k);
+
+                    $cloneNode.find("[node-pid='"+key+"']").attr("node-pid", k);
+					$cloneNode.find("[node-id='"+key+"']").attr("node-id", k);
+				});
+                
+                var curNode = fg.treeview.nodeTree.getCurrentNode();
+				fg.treeview.nodeTree.insertDomNode($cloneNode, curNode.id);
+
+				if(curNode.id == "root"){
+					$body.append($clone);
+				}else{
+					$body.find("[data-key='"+curNode.id+"']:first").append($clone);
+				}
 
 				this.bindEvent();
 			},
@@ -943,8 +985,18 @@
 				remove : function(id){
 				    this.ref().getNcTreeview().deleteNode(id);
 				},
-				getCurrentNode : function(){
-				    return this.ref().getNcTreeview().getCurrentNode();
+				insertDomNode : function($node, pid){
+					return this.ref().getNcTreeview().insertDomNode($node, this.getDomNode(pid));
+				},
+				getDomNode : function(id){
+					return this.ref().getNcTreeview().getDomNode(id);
+				},
+				getCurrentNode : function(id){
+					if(id){
+						return this.ref().getNcTreeview().getNodeById(id);
+					}else{
+						return this.ref().getNcTreeview().getCurrentNode();
+					}
 				},
 				setCurrentNode : function(id){
 				    this.ref().getNcTreeview().setCurrentNode(id, true, true);
@@ -980,10 +1032,8 @@
                               
 							});
 							$("#nodeRightMenu").find("li").click(function(){
-								var $this = $(this), com = $this.attr("command"),
-								    node = fg.treeview.nodeTree.getCurrentNode(),
-								    element = fg.querySelector("[data-key='"+node.id+"']:first");
-								fg.command[com].call($this, node, element);
+								var $this = $(this), com = $this.attr("command"); 
+								fg.command[com].call($this);
                                 
 								$menu.removeClass("show");
 							});
@@ -1203,13 +1253,21 @@
 		},
 		//通用命令
 		command : {
-			copyElement : function(node, element){
-				alert(element[0].outerHTML);
+			copyElement : function(){
+				var node = fg.treeview.nodeTree.getCurrentNode();
+				if(node.id == "root"){
+					fg.clipboard = null;
+					return;
+				}
+                fg.clipboard = node.id;
 			},
-			pasteElement : function(node, element){
-				
+			pasteElement : function(){
+				if(!fg.clipboard) return;
+
+				var id = fg.clipboard;
+                fg.formContent.copy(id);
 			},
-			deleteElement : function(node, element){
+			deleteElement : function(){
 				
 			}
 		}
